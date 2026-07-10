@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoamRadical | Ultimate Travel Planner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="emoji-container" id="emoji-canvas"></div>
+
+    <div id="notification-zone"></div>
+
+    <section class="auth-screen" id="auth-module">
+        <div class="auth-box">
+            <h1 class="brand-title">RoamRadical</h1>
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuth('login')">Log In</button>
+                <button class="auth-tab" onclick="switchAuth('signup')">Sign Up</button>
+            </div>
+
+            <div id="auth-fields">
+                </div>
+            <button class="btn-action" style="margin-top: 15px;" onclick="executeAuth()">Let's Explore</button>
+        </div>
+    </section>
+
+    <main id="app-container">
+        <nav>
+            <h2 class="brand-title" style="margin:0; font-size: 1.6rem;">RoamRadical</h2>
+            <div class="nav-actions">
+                <button class="theme-toggle" onclick="toggleTheme()">🌓 Mode Toggle</button>
+                <button class="cart-trigger" onclick="toggleCart(true)">🛒 Cart (<span id="cart-count">0</span>)</button>
+            </div>
+        </nav>
+
+        <header class="hero">
+            <h1>The Horizon Awaits</h1>
+            <p class="hero-subtitle">Tailor your perfect layout. Switch sorting, track custom travel windows, and compile packages smoothly.</p>
+        </header>
+
+        <section class="control-panel">
+            <div>
+                <label style="margin-right: 10px; font-weight: bold;">Destination:</label>
+                <select class="search-select" id="destination-select" onchange="renderCatalog()">
+                    <option value="all">Everywhere (All Destinations)</option>
+                    <option value="Paris">Paris, France</option>
+                    <option value="Bali">Bali, Indonesia</option>
+                    <option value="Tokyo">Tokyo, Japan</option>
+                </select>
+            </div>
+            <div>
+                <label style="margin-right: 10px; font-weight: bold;">Sort Pricing:</label>
+                <select class="search-select" id="price-sort" onchange="renderCatalog()">
+                    <option value="low">Cheapest to Expensive</option>
+                    <option value="high">Expensive to Cheapest</option>
+                </select>
+            </div>
+        </section>
+
+        <h2 class="section-title">Curated Accommodations & Transports</h2>
+        <div class="grid" id="catalog-grid"></div>
+
+        <h2 class="section-title">Highly Recommended Hotspots & Foods</h2>
+        <div class="grid" id="recommendations-grid"></div>
+    </main>
+
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Selected Itinerary</h3>
+            <button class="theme-toggle" onclick="toggleCart(false)">✕ Close</button>
+        </div>
+        <div class="cart-items" id="cart-items-list"></div>
+        <div style="border-top: 2px solid rgba(255,255,255,0.05); padding-top: 15px;">
+            <div style="display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: bold; margin-bottom: 20px;">
+                <span>Est. Total:</span>
+                <span id="cart-total-price">$0</span>
+            </div>
+            <button class="btn-action" onclick="openPaymentGateway()">Secure Checkout</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="payment-modal">
+        <div class="pay-modal">
+            <h3>Checkout Verification Terminal</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 5px;">Verify billing balance matches precisely.</p>
+            
+            <div style="margin: 15px 0; text-align: left;">
+                <label style="font-size: 0.8rem; font-weight: bold; text-transform: uppercase;">Payment Route:</label>
+                <select class="search-select" style="width: 100%; margin-top: 5px;">
+                    <option>QRIS (Instant Digital Scan)</option>
+                    <option>GoPay / Digital Wallet</option>
+                    <option>Pay at Airport Counter</option>
+                    <option>Global Credit/Debit</option>
+                </select>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; font-weight: bold; background: rgba(0,0,0,0.1); padding: 10px; border-radius: 8px;">
+                <span>Target Due:</span>
+                <span id="modal-target-amount" style="color: var(--primary-red);">$0</span>
+            </div>
+
+            <div class="keypad-display" id="keypad-readout">0</div>
+
+            <div class="keypad-grid">
+                <button class="key-btn" onclick="pressKey('1')">1</button>
+                <button class="key-btn" onclick="pressKey('2')">2</button>
+                <button class="key-btn" onclick="pressKey('3')">3</button>
+                <button class="key-btn" onclick="pressKey('4')">4</button>
+                <button class="key-btn" onclick="pressKey('5')">5</button>
+                <button class="key-btn" onclick="pressKey('6')">6</button>
+                <button class="key-btn" onclick="pressKey('7')">7</button>
+                <button class="key-btn" onclick="pressKey('8')">8</button>
+                <button class="key-btn" onclick="pressKey('9')">9</button>
+                <button class="key-btn" style="color: var(--primary-red)" onclick="pressKey('C')">C</button>
+                <button class="key-btn" onclick="pressKey('0')">0</button>
+                <button class="key-btn" style="color: var(--primary-green)" onclick="pressKey('OK')">✓</button>
+            </div>
+            <button class="auth-tab" style="width: 100%;" onclick="closePaymentGateway()">Abort Transaction</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
